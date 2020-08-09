@@ -1,8 +1,8 @@
 FROM ubuntu:16.04
 
-ADD sources.list /etc/apt/sources.list
-RUN rm -f /etc/apt/sources.list.d/*.list && \
-    apt-get update && \
+# ADD sources.list /etc/apt/sources.list
+# RUN rm -f /etc/apt/sources.list.d/*.list && \
+RUN apt-get update && \
     apt-get install -y openssh-server && \
     echo '29' | apt-get install -y xorg && \
     apt-get install -y vim
@@ -16,15 +16,15 @@ RUN mkdir -p /var/run/sshd && \
     sed -i "s/PermitRootLogin prohibit-password/PermitRootLogin yes/g" /etc/ssh/sshd_config
     
 # install Clion
-ADD CLion-2018.2.3.tar.gz /usr/local
-ADD clion.key /root/.CLion2018.2/config/clion.key
-
-RUN echo "export PATH=/usr/local/clion-2018.2.3/bin:$PATH">> /etc/profile
-ENV PATH /usr/local/clion-2018.2.3/bin:$PATH
-
-RUN echo 'if [ `grep -c jetbrains /etc/hosts` -eq 0 ];then' >> /etc/profile &&\
-    echo '  echo "0.0.0.0 account.jetbrains.com" >> /etc/hosts' >> /etc/profile &&\
-    echo 'fi' >> /etc/profile
+# ADD CLion-2018.2.3.tar.gz /usr/local
+# ADD clion.key /root/.CLion2018.2/config/clion.key
+# 
+# RUN echo "export PATH=/usr/local/clion-2018.2.3/bin:$PATH">> /etc/profile
+# ENV PATH /usr/local/clion-2018.2.3/bin:$PATH
+# 
+# RUN echo 'if [ `grep -c jetbrains /etc/hosts` -eq 0 ];then' >> /etc/profile &&\
+#     echo '  echo "0.0.0.0 account.jetbrains.com" >> /etc/hosts' >> /etc/profile &&\
+#     echo 'fi' >> /etc/profile
 
 # install astyle
 RUN apt-get update && apt-get install -y build-essential gdb cmake git
@@ -40,6 +40,9 @@ ADD zsh-autosuggestions.tar.gz /zsh
 ADD zsh-syntax-highlighting.tar.gz /zsh
 ADD install-zsh.sh /zsh/install-zsh.sh
 RUN /bin/sh /zsh/install-zsh.sh
+
+RUN sed -i "s/X11DisplayOffset 10/#X11DisplayOffset 10/g" /etc/ssh/sshd_config &&\
+    echo "X11UseLocalhost no" >> /etc/ssh/sshd_config
 
 ADD run.sh /home/run.sh
 RUN chmod +x /home/run.sh
