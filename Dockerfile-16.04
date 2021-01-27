@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:16.04
 
 # ADD sources.list /etc/apt/sources.list
 # RUN rm -f /etc/apt/sources.list.d/*.list && \
@@ -10,9 +10,10 @@ RUN apt-get update && \
 RUN mkdir -p /var/run/sshd && \
     mkdir -p /root/.ssh && \
     echo 'root:123456' |chpasswd && \
+    sed -i "s/UsePrivilegeSeparation.*/UsePrivilegeSeparation no/g" /etc/ssh/sshd_config && \
     sed -i "s/UsePAM.*/UsePAM no/g" /etc/ssh/sshd_config && \
-    sed -i "s/#Port 22/Port 22/g" /etc/ssh/sshd_config && \
-    sed -i "s/#PermitRootLogin prohibit-password/PermitRootLogin yes/g" /etc/ssh/sshd_config
+    sed -i "s/^PermitRootLogin without-password/PermitRootLogin yes/g" /etc/ssh/sshd_config && \
+    sed -i "s/PermitRootLogin prohibit-password/PermitRootLogin yes/g" /etc/ssh/sshd_config
     
 # install Clion
 # ADD CLion-2018.2.3.tar.gz /usr/local
