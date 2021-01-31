@@ -43,6 +43,9 @@ RUN /bin/sh /zsh/install-zsh.sh
 RUN sed -i "s/X11DisplayOffset 10/#X11DisplayOffset 10/g" /etc/ssh/sshd_config &&\
     echo "X11UseLocalhost no" >> /etc/ssh/sshd_config
 
+RUN apt update && apt install -y default-jdk node.js npm
+RUN apt update && apt install -y iproute2 net-tools
+
 ADD run.sh /home/run.sh
 RUN chmod +x /home/run.sh
 CMD ["/home/run.sh"]
