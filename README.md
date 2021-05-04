@@ -13,3 +13,10 @@ docker pull ubuntu:18.04
 
 docker build -t ubuntu18.04:dev .
 docker run --name u18 -d --privileged -v `pwd`:/home/test -p 222:22 ubuntu18.04:dev
+
+"""
+打包 ubuntu18.04_dev.tar 1.43G
+加载后 1.5G
+
+zxivs-vap-sipas-devel_latest.tar 6.35G 基于 ubuntu16.04-dev
+"""
