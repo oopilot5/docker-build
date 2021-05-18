@@ -46,6 +46,12 @@ RUN sed -i "s/X11DisplayOffset 10/#X11DisplayOffset 10/g" /etc/ssh/sshd_config &
 RUN apt update && apt install -y default-jdk nodejs npm
 RUN apt update && apt install -y iproute2 net-tools
 
+# install zh_CN
+RUN apt-get update && apt-get install -y language-pack-zh-hant language-pack-zh-hans && \
+    cp /usr/share/i18n/SUPPORTED /var/lib/locales/supported.d/local && \
+    locale-gen zh_CN.UTF-8 && locale-gen zh_CN.GBK && \
+    echo "export LANG=zh_CN.UTF-8" >> /etc/profile
+
 ADD run.sh /home/run.sh
 RUN chmod +x /home/run.sh
 CMD ["/home/run.sh"]

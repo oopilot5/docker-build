@@ -18,5 +18,8 @@ docker run --name u18 -d --privileged -v `pwd`:/home/test -p 222:22 ubuntu18.04:
 打包 ubuntu18.04_dev.tar 1.43G
 加载后 1.5G
 
+docker save ubuntu18.04-zh:dev > ubuntu18.04-zh_dev.tar 1.5G
+加载后 1.54G
+
 zxivs-vap-sipas-devel_latest.tar 6.35G 基于 ubuntu16.04-dev
 """
